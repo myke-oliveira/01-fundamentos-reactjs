@@ -31,6 +31,10 @@ export function Post({ author, content, publishedAt }) {
     setNewCommentText(event.target.value)
   }
 
+  function deleteComment(commentToDelete) {
+    setComments(comments.filter(comment => comment != commentToDelete))
+  }
+
   return (
     <article className={styles.post}>
       <header>
@@ -41,7 +45,12 @@ export function Post({ author, content, publishedAt }) {
             <span>{author.role}</span>
           </div>
         </div>
-        <time title={publishedDateFormatted} dateTime={publishedAt.toISOString()}>{publishedDateInterval}</time>
+        <time
+          title={publishedDateFormatted}
+          dateTime={publishedAt.toISOString()}
+        >
+          {publishedDateInterval}
+        </time>
       </header>
 
       <div className={styles.content}>
@@ -69,7 +78,11 @@ export function Post({ author, content, publishedAt }) {
         </footer>
       </form>
       <div className={styles.commentList}>
-        {comments.map(comment => <Comment key={comment} content={comment} />)}
+        {comments.map(comment => <Comment
+          key={comment}
+          content={comment}
+          onDeleteComment={deleteComment}
+        />)}
       </div>
     </article >
   )
